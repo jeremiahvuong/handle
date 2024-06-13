@@ -7,13 +7,13 @@
 #include <random>
 #include <iostream>
 
-enum Card { blackSpades, blackSuits, redHearts, redDiamonds };
+enum Card { blackSpades, blackClubs, redHearts, redDiamonds };
 // spades (♠) | clubs (♣)
 // hearts (♥) | diamonds (♦)
 
 std::map <Card, std::string> cardSymbols = {
   {blackSpades, "♠"},
-  {blackSuits, "♣"},
+  {blackClubs, "♣"},
   {redHearts, "♥"},
   {redDiamonds, "♦"}
 };
@@ -28,7 +28,7 @@ public:
 
 private:
   int spadeCount;
-  int suitCount;
+  int clubCount;
   int heartCount;
   int diamondCount;
 };
@@ -40,7 +40,7 @@ public:
 
   int totalCards = 40;
   int totalSpades;
-  int totalSuits;
+  int totalClubs;
   int totalHearts;
   int totalDiamonds;
 
@@ -55,15 +55,15 @@ public:
 
 private:
   void generateSuits() {
-    std::vector<Card> suits = { blackSpades, blackSuits, redHearts, redDiamonds };
+    std::vector<Card> suits = { blackSpades, blackClubs, redHearts, redDiamonds };
     std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(suits.begin(), suits.end(), g);
     goalSuit = suits[0];
 
     std::map<Card, Card> suitPairs = {
-      {blackSpades, blackSuits},
-      {blackSuits, blackSpades},
+      {blackSpades, blackClubs},
+      {blackClubs, blackSpades},
       {redHearts, redDiamonds},
       {redDiamonds, redHearts}
     };
@@ -74,8 +74,8 @@ private:
     case blackSpades:
       totalSpades = 12;
       break;
-    case blackSuits:
-      totalSuits = 12;
+    case blackClubs:
+      totalClubs = 12;
       break;
     case redHearts:
       totalHearts = 12;
@@ -87,7 +87,7 @@ private:
 
     std::vector<Card> remainingSuits;
     if (commonSuit != blackSpades) remainingSuits.push_back(blackSpades);
-    if (commonSuit != blackSuits) remainingSuits.push_back(blackSuits);
+    if (commonSuit != blackClubs) remainingSuits.push_back(blackClubs);
     if (commonSuit != redHearts) remainingSuits.push_back(redHearts);
     if (commonSuit != redDiamonds) remainingSuits.push_back(redDiamonds);
 
@@ -101,8 +101,8 @@ private:
       case blackSpades:
         totalSpades = counts[i];
         break;
-      case blackSuits:
-        totalSuits = counts[i];
+      case blackClubs:
+        totalClubs = counts[i];
         break;
       case redHearts:
         totalHearts = counts[i];
@@ -121,7 +121,7 @@ int main() {
   std::cout << "Common suit: " << cardSymbols[game.commonSuit] << std::endl;
 
   std::cout << "♠: " << game.totalSpades << std::endl;
-  std::cout << "♣: " << game.totalSuits << std::endl;
+  std::cout << "♣: " << game.totalClubs << std::endl;
   std::cout << "♥: " << game.totalHearts << std::endl;
   std::cout << "♦: " << game.totalDiamonds << std::endl;
   return 0;
